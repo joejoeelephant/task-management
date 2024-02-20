@@ -1,56 +1,64 @@
-## Getting Started
+Data Model
+    The application's data model is structured around several key entities:
 
-First, run the development server:
+    Board: Represents a project or context for organizing tasks.
+    StatusItem: Defines categories or phases for task progression.
+    Task: Represents an individual task with a title, description, and associated subtasks.
+    Subtask: Defines actionable items within a larger task.
+    For a detailed overview of each type and their properties, see /lib/type.ts.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Data Storage
+    The application uses the browser's localStorage to persist data across sessions. All task and board information is stored under the key 'boards', allowing for quick retrieval and update operations without the need for an external database.
+
+Getting Started
+
+To set up the Task Management Program locally, follow these steps:
+
+Install dependencies:
+
+``` bash
+    npm install
 ```
+Start the application:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+``` bash
+    npm run dev
+```
+The application should now be running on http://localhost:3000.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization).
+Usage
+    To use the Task Management Program, navigate through the UI to create boards, add tasks, and assign them statuses. Each task can be expanded to reveal or add subtasks, providing detailed tracking at a glance.
 
-## Learn More
-Types Overview
+Types Documentation
 
 Board
-    Represents a project or context for which tasks are organized. Each board contains a list of statuses and tasks associated with it.
+    Represents a project or context for tasks.
 
-    id (string): A unique identifier for the board.
-    name (string): The name of the board.
-    statusList (StatusItem[]): An array of statuses that tasks can be categorized by within this board.
-    tasks (Task[]): An array of tasks that belong to this board.
+    id: Unique identifier
+    name: Board name
+    statusList: Array of StatusItem
+    tasks: Array of Task
 
 StatusItem
-    Defines a category or phase that a task can be in. Used to track the progression of tasks within a board.
+    Defines a task's status.
 
-    id (string): A unique identifier for the status item.
-    value (string): The name or label of the status, such as "Todo", "In Progress", or "Done".
+    id: Unique identifier
+    value: Status name
 
 Task
-    Represents an individual task or work item. Tasks are associated with a board and have a status indicating their current progression.
+    Represents a task within a board.
 
-    id (string): A unique identifier for the task.
-    title (string): The title or brief description of the task.
-    description (string): A detailed description of the task.
-    statusId (string): The identifier of the task's current status, linking to a StatusItem.
-    subtasks (Subtask[]): An array of subtasks or smaller tasks that make up this task.
+    id: Unique identifier
+    title: Task title
+    description: Task description
+    statusId: Identifier for the task's current status
+    subtasks: Array of Subtask
 
 Subtask
-    Defines a smaller, actionable item within a larger task. Subtasks help break down tasks into manageable parts.
+    Defines a part of a larger task.
 
-    id (string): A unique identifier for the subtask.
-    title (string): The title or brief description of the subtask.
-    isCompleted (boolean): A flag indicating whether the subtask has been completed.
+    id: Unique identifier
+    title: Subtask title
+    isCompleted: Whether the subtask is completed
 
-BoardNav
-    Used for navigation purposes, allowing users to switch between different boards within the application.
-
-    id (string): A unique identifier for the navigation item.
-    name (string): The name of the board this navigation item links to.
+For more details on each type, refer to the source code documentation.
