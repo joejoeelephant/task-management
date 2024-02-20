@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { InputTextProps, InputTextAreaProps, Task,  Status} from '@/lib/type'
+import { InputTextProps, InputTextAreaProps} from '@/lib/type'
 
 export function useEditTaskForm() {
     const [taskTitle, setTaskTitle] = useState<InputTextProps>({

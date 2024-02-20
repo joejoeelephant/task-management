@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useReducer, useState } from 'react';
 // Types
-import { Board, Task, Subtask, Status, StatusItem } from '@/lib/type'; // Assuming BoardTypes.ts contains your type definitions
+import { Board, Task, Subtask, StatusItem } from '@/lib/type'; // Assuming BoardTypes.ts contains your type definitions
 import { useBoard } from "@/hooks/useBoard";
 import { useParams } from "next/navigation";
 // Actions
