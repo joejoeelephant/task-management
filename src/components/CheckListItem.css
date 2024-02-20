@@ -1,0 +1,7 @@
+.check-list-checkbox:checked + .check-list-checkbox-ui{
+    @apply bg-main-purple;
+}
+
+.check-list-checkbox:checked + * + .check-list-item-value{
+    @apply text-secondary-color line-through;
+}

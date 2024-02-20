@@ -1,0 +1,6 @@
+.board-icon {
+    mask-image: var(--mask-image-url);
+}
+.nav-board-item:hover .board-icon{
+    @apply bg-main-purple
+} 

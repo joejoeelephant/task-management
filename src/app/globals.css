@@ -3,31 +3,87 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    --header-height: 4rem;
+    --light-grey: #F4F7FD;
+    --very-dark-grey: #20212C;
+    --main-purple: #635FC7;
+    --medium-grey: #828FA3;
+    --dark-grey: #2B2C37;
+    --line-color: #E4EBFA;
+    --sidebar-width: 0px;
+    --sidebar-inner-width: 0px;
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+@media (min-width: 768px) {
+    :root {
+        --sidebar-width: 261px;
+        --sidebar-inner-width: 261px;
+        --header-height: 5rem;
+    }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@media (min-width: 1024px) {
+    :root {
+        --sidebar-width: 300px;
+        --sidebar-inner-width: 300px;
+        --header-height: 6rem;
+    }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.sidebar-collapes {
+    --sidebar-width: 0px;
+}
+
+.main-wrapper{
+    display: grid;
+    grid-template-columns:var(--sidebar-width) 1fr;
+}
+
+.body-wrapper {
+    display: grid;
+    grid-template-rows: var(--header-height) calc(100svh - var(--header-height));
+}
+
+/* Style the scrollbar track (the part the thumb moves within) */
+.scroller-decoration::-webkit-scrollbar-track {
+    background-color: var(--light-grey);
+    border-radius: 10px;
+}
+
+.dark .scroller-decoration::-webkit-scrollbar-track {
+    background-color: var(--dark-grey);
+    border-radius: 10px;
+}
+
+/* Style the scrollbar thumb (the draggable element) */
+.scroller-decoration::-webkit-scrollbar-thumb {
+    background-color: var(--line-color);
+    border-radius: 10px;
+}
+
+.dark .scroller-decoration::-webkit-scrollbar-thumb {
+    background-color: var(--very-dark-grey);
+    border-radius: 10px;
+}
+
+/* Hover styles for the scrollbar thumb */
+.scroller-decoration::-webkit-scrollbar-thumb:hover {
+    background-color: var(--medium-grey);
+}
+
+/* Style the width of the scrollbar */
+.scroller-decoration::-webkit-scrollbar {
+    width: 8px; /* Adjust the width of the scrollbar here */
+    height: 8px;
+}
+
+.icon-box {
+    mask-image: var(--mask-image-url);
+    mask-repeat: no-repeat;
+}
+
+.flow > * + *   {
+    --top-gap: 1rem;
+    margin-top: var(--top-gap);
 }

@@ -1,0 +1,17 @@
+.theme-checkbox:checked + .theme-switch > div{
+    transform: translateX(23px);
+}
+
+.sidebar-wrapper {
+    height: 100svh
+}
+
+@media (min-width: 768px) {
+    .sidebar-wrapper {
+        height: calc(100svh - var(--header-height));
+    }
+
+    .sidebar-wrapper > div {
+        width: var(--sidebar-inner-width)
+    }
+}

@@ -1,0 +1,20 @@
+export const colors = [
+    'indigo',
+    'fuchsia',
+    'green',
+    'blue',
+    'yellow',
+    'red',
+    'lime',
+    'violet',
+    'purple',
+    'pink',
+    'vyan',
+    'teal',
+    'emerald',
+    'amber',
+    'orange',
+    'zinc',
+    'neutral',
+    'stone'
+]
