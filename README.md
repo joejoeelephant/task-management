@@ -1,5 +1,3 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
 
 First, run the development server:
@@ -16,21 +14,43 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization).
 
 ## Learn More
+Types Overview
 
-To learn more about Next.js, take a look at the following resources:
+Board
+    Represents a project or context for which tasks are organized. Each board contains a list of statuses and tasks associated with it.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    id (string): A unique identifier for the board.
+    name (string): The name of the board.
+    statusList (StatusItem[]): An array of statuses that tasks can be categorized by within this board.
+    tasks (Task[]): An array of tasks that belong to this board.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+StatusItem
+    Defines a category or phase that a task can be in. Used to track the progression of tasks within a board.
 
-## Deploy on Vercel
+    id (string): A unique identifier for the status item.
+    value (string): The name or label of the status, such as "Todo", "In Progress", or "Done".
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Task
+    Represents an individual task or work item. Tasks are associated with a board and have a status indicating their current progression.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    id (string): A unique identifier for the task.
+    title (string): The title or brief description of the task.
+    description (string): A detailed description of the task.
+    statusId (string): The identifier of the task's current status, linking to a StatusItem.
+    subtasks (Subtask[]): An array of subtasks or smaller tasks that make up this task.
+
+Subtask
+    Defines a smaller, actionable item within a larger task. Subtasks help break down tasks into manageable parts.
+
+    id (string): A unique identifier for the subtask.
+    title (string): The title or brief description of the subtask.
+    isCompleted (boolean): A flag indicating whether the subtask has been completed.
+
+BoardNav
+    Used for navigation purposes, allowing users to switch between different boards within the application.
+
+    id (string): A unique identifier for the navigation item.
+    name (string): The name of the board this navigation item links to.
