@@ -135,5 +135,16 @@ describe('useEditBoardForm', () => {
         expect(errMsg4 === "").toBe(true);
     });
   
-    // Add more tests as needed for other functionalities
+    it('reset EditTaskForm', () => {
+        const { result } = renderHook(() => useEditBoardForm());
+    
+        // Set a new status ID
+        act(() => {
+            result.current.resetEditBoardForm();
+        });
+        
+        expect(result.current.boardName.value).toBe('');
+        expect(result.current.columns.length).toBe(0);
+
+    });
 });

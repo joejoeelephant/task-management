@@ -17,7 +17,7 @@ export default function PopMenu({isVisible, children, triggerRef}: Props) {
     }, [triggerRef, isVisible])
 
     return (
-        <div className={`absolute z-40 min-w-32 min-h-16 bg-white border rounded-lg overflow-clip ${showMenu ? '' : 'hidden'}`} style={{top: `${position.y}px`, left: `${position.x}px`}}>
+        <div className={`absolute z-40 md:min-w-32 min-h-16 bg-white border rounded-lg overflow-clip ${showMenu ? '' : 'hidden'}`} style={{top: `${position.y}px`, left: `${position.x}px`}}>
             {children}
         </div>
     )

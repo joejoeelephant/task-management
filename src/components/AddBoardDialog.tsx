@@ -29,7 +29,8 @@ export default function AddBoardDialog({isVisible, closeDialog}: Props) {
         validateColumns,
         validateColumn,
         addColumn,
-        deleteColumnById 
+        deleteColumnById,
+        resetEditBoardForm
     } = useEditBoardForm()
 
     const addBoard = () => {
@@ -45,6 +46,7 @@ export default function AddBoardDialog({isVisible, closeDialog}: Props) {
         }
         addBoardToLocal(initBoardData)
         dispatch({type: "ADD_BOARD_NAV", payload: {id, name: boardName.value}})
+        resetEditBoardForm()
         closeDialog()
         router.push('/board')
     }

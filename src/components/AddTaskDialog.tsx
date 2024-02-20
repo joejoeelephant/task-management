@@ -33,7 +33,8 @@ export default function AddTaskDialog({isVisible, closeDialog}: Props) {
         validateSubtasks,
         notifySubtasks,
         deleteSubtaskById,
-        updateSubTaskById
+        updateSubTaskById,
+        resetEditTaskForm
     } = useEditTaskForm();
 
     useEffect(() => {
@@ -68,6 +69,8 @@ export default function AddTaskDialog({isVisible, closeDialog}: Props) {
         notifyTaskTitle()
         if(!taskTitle.valid || !validateSubtasks()) return;
         saveTask()
+        resetEditTaskForm()
+        closeDialog()
     }
     
     
@@ -106,7 +109,7 @@ export default function AddTaskDialog({isVisible, closeDialog}: Props) {
                     </div>
                     <div>
                         <label className='text-paragraph-xs font-bold text-secondary-color'>Subtasks</label>
-                        <div className='mt-2 max-h-48 overflow-auto scroller-decoration grid gap-3'>
+                        <div className='mt-2 max-h-28 md:max-h-40 overflow-auto scroller-decoration grid gap-3'>
                             {
                                 subtasks.map(item => {
                                     return (

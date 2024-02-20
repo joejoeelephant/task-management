@@ -88,8 +88,10 @@ export default function CheckTaskDialog({id, isVisible, closeDialog}: Props) {
                                 }
                             </div>
                             <div>
-                                <label className='text-paragraph-xs font-bold text-secondary-color'>Subtasks (2 of 3)</label>
-                                <div className='mt-4 grid gap-2'>
+                                <label className='text-paragraph-xs font-bold text-secondary-color'>
+                                    Subtasks ({currentTask.subtasks.filter(item => item.isCompleted).length} of {currentTask.subtasks.length})
+                                </label>
+                                <div className='mt-4 grid gap-2 max-h-28 md:max-h-40 overflow-auto scroller-decoration'>
                                     {
                                         currentTask &&
                                         currentTask.subtasks.map(item => {
@@ -112,7 +114,7 @@ export default function CheckTaskDialog({id, isVisible, closeDialog}: Props) {
                 }
             </Dialog>
             <PopMenu key={String(popMenuVisible)} triggerRef={PopMenuTriggerRef} isVisible={popMenuVisible}>
-                <div className='text-paragraph-medium w-40 bg-white dark:bg-dark-grey p-5 md:w-48' >
+                <div className='text-paragraph-medium bg-white dark:bg-dark-grey p-5 md:w-48' >
                     <div className='text-secondary-color cursor-pointer' onClick={openEditTaskDialog}>
                         Edit Task
                     </div>

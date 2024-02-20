@@ -102,7 +102,8 @@ export default function EditTaskDialog({isVisible, closeDialog, id}: Props) {
         updateTaskToLocal(state.id, updatedTaskData)
         
         dispatch({type: "UPDATE_TASK", payload: updatedTaskData})
-    }, [state, currentTask, description, taskTitle, subtasks, dispatch, notifySubtasks, notifyTaskTitle, validateSubtasks, statusId])
+        closeDialog()
+    }, [state, currentTask, description, taskTitle, subtasks, dispatch, notifySubtasks, notifyTaskTitle, validateSubtasks, statusId, closeDialog])
     
     
     return (
@@ -140,7 +141,7 @@ export default function EditTaskDialog({isVisible, closeDialog, id}: Props) {
                     </div>
                     <div>
                         <label className='text-paragraph-xs font-bold text-secondary-color'>Subtasks</label>
-                        <div className='mt-2 max-h-48 overflow-auto scroller-decoration grid gap-3'>
+                        <div className='mt-2 max-h-28 md:max-h-40 overflow-auto scroller-decoration grid gap-3'>
                             {
                                 subtasks.map(item => {
                                     return (

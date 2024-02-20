@@ -67,6 +67,17 @@ export function useEditBoardForm() {
         })
     }
 
+    const resetEditBoardForm = () => {
+        setBoardName({
+            id: uuidv4(),
+            value: "",
+            valid: false,
+            shouldValidate: false,
+        })
+
+        setColumns([])
+    }
+
     return {
         boardName, 
         columns, 
@@ -79,6 +90,7 @@ export function useEditBoardForm() {
         validateColumns,
         validateColumn,
         addColumn,
-        deleteColumnById 
+        deleteColumnById,
+        resetEditBoardForm
     }
 }

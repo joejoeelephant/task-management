@@ -67,6 +67,28 @@ export function useEditTaskForm() {
         setDescription(prev => {return {...prev, value, valid}})
     }
 
+    const resetEditTaskForm = () => {
+        setTaskTitle({
+            id: uuidv4(),
+            value: "",
+            valid: false,
+            shouldValidate: false,
+        })
+
+        setDescription({
+            id: uuidv4(),
+            value: "",
+            valid: false,
+            shouldValidate: false,
+        })
+
+        setSubtasks([])
+
+        setColumns([])
+
+        setStatusId("")
+    }
+
     return {
         taskTitle, setTaskTitle,
         description, setDescription,
@@ -80,6 +102,7 @@ export function useEditTaskForm() {
         validateSubtasks,
         notifySubtasks,
         deleteSubtaskById,
-        updateSubTaskById
+        updateSubTaskById,
+        resetEditTaskForm
     }
 }

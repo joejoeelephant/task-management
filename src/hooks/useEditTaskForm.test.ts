@@ -109,4 +109,19 @@ describe('useEditTaskForm', () => {
     
         expect(result.current.statusId).toBe('newStatusId');
     });
+
+    it('reset EditTaskForm', () => {
+        const { result } = renderHook(() => useEditTaskForm());
+    
+        // Set a new status ID
+        act(() => {
+            result.current.resetEditTaskForm();
+        });
+        
+        expect(result.current.taskTitle.value).toBe('');
+        expect(result.current.description.value).toBe('');
+        expect(result.current.subtasks.length).toBe(0);
+        expect(result.current.columns.length).toBe(0);
+        expect(result.current.statusId).toBe('');
+    });
 });

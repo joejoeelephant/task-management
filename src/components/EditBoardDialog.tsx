@@ -62,7 +62,8 @@ export default function EditBoardDialog({isVisible, closeDialog}: Props) {
         boardDataDispatch({ type: "UPDATE_STATUS_LIST", payload: columns.map(column => {return {id: column.id, value: column.value}}) });
         boardNavListDispatch({ type: "UPDATE_BOARD_NAME", payload: { id: boardData.id, name: boardName.value } });
         updateBoard({ ...boardData, name: boardName.value, statusList: columns.map(column => {return {id: column.id, value: column.value}}) });
-    }, [boardName, columns, boardData, boardDataDispatch, boardNavListDispatch, validateColumns, notifyBoardName, notifyColumns]);
+        closeDialog()
+    }, [boardName, columns, boardData, boardDataDispatch, boardNavListDispatch, validateColumns, notifyBoardName, notifyColumns, closeDialog]);
     
 
     return (
