@@ -6,10 +6,10 @@ import { Board } from '@/lib/type'
 import InputTextItem from './InputTextItem'
 import { validateRequired } from '@/utils/FormValidate.utils'
 import { v4 as uuidv4 } from 'uuid';
-import { useRouter } from 'next/navigation'
-import { useBoardNavList } from '@/context/useBoardNavContext'
 import { useEditBoardForm } from '@/hooks/useEditBoardForm'
 import { addBoard as addBoardToLocal } from '@/localAPI/BoardApi'
+import { useAppDispatch } from '@/hooks/storeHooks'
+import { addBoardNav } from '@/lib/features/boardNavigationList/boardNavigationListSlice'
 type Props = {
     isVisible: boolean;
     closeDialog: () => void;
@@ -17,8 +17,7 @@ type Props = {
 
 
 export default function AddBoardDialog({isVisible, closeDialog}: Props) {
-    const router = useRouter()
-    const {dispatch} = useBoardNavList()
+    const dispatch = useAppDispatch()
     const {
         boardName, 
         columns,
@@ -45,10 +44,9 @@ export default function AddBoardDialog({isVisible, closeDialog}: Props) {
             tasks: []
         }
         addBoardToLocal(initBoardData)
-        dispatch({type: "ADD_BOARD_NAV", payload: {id, name: boardName.value}})
+        dispatch(addBoardNav({id, name: boardName.value}))
         resetEditBoardForm()
         closeDialog()
-        router.push('/board')
     }
 
 

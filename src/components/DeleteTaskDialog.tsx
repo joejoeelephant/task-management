@@ -2,11 +2,10 @@ import React, { useCallback, useEffect, useState } from 'react'
 import Dialog from './Dialog'
 import SecondaryButton from './SecondaryButton'
 import AlertButton from './AlertButton'
-import { useBoardData } from '@/context/useBoardDataContext'
-import { deleteTask } from '@/localAPI/TaskApi'
-import { useParams } from 'next/navigation'
+import { deleteTask as deleteTaskApi } from '@/localAPI/TaskApi'
 import { Task } from '@/lib/type'
-
+import { useAppSelector, useAppDispatch } from '@/hooks/storeHooks'
+import { deleteTask } from '@/lib/features/tasks/tasksSlice'
 type Props = {
     id: string;
     isVisible: boolean;
@@ -14,22 +13,22 @@ type Props = {
 }
 
 export default function DeleteTaskDialog({closeDialog, isVisible, id}: Props) {
-    const {state, dispatch} = useBoardData()
     const [taskData, setTaskData] = useState<Task | undefined>(undefined)
+    const tasksState = useAppSelector(state => state.tasks)
+    const boardInfoState = useAppSelector(state => state.boardInfo)
+    const storeDispatch = useAppDispatch()
 
     useEffect(() => {
-        if(!state) return;
-        const task = state.tasks.find(item => item.id === id)
+        const task = tasksState.tasks.find(item => item.id === id)
         setTaskData(task)
-    }, [state, id])
+    }, [id, tasksState])
 
     const deleteTaskHandle = useCallback(() => {
-        if(!state) return;
-        dispatch({type: "DELETE_TASK", payload: {taskId: id}})
-        deleteTask(state.id, id)
+        deleteTaskApi(boardInfoState.id, id)
+        storeDispatch(deleteTask(id))
         closeDialog()
-
-    }, [state, id, dispatch, closeDialog])
+    }, [id, storeDispatch, boardInfoState, closeDialog])
+    
     return (
         <Dialog isVisible={isVisible} closeDialog={closeDialog}>
             <div className=''>

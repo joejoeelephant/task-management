@@ -4,7 +4,8 @@ import SecondaryButton from './SecondaryButton'
 import AlertButton from './AlertButton'
 import { deleteBoard } from '@/localAPI/BoardApi'
 import { useParams, useRouter } from 'next/navigation'
-import { useBoardNavList } from '@/context/useBoardNavContext'
+import { useAppDispatch } from '@/hooks/storeHooks'
+import { deleteBoardNav } from '@/lib/features/boardNavigationList/boardNavigationListSlice'
 type Props = {
     isVisible: boolean;
     closeDialog: () => void;
@@ -12,12 +13,12 @@ type Props = {
 
 export default function DeleteBoardDialog({isVisible, closeDialog}: Props) {
     const {slug} = useParams<{slug: string}>()
-    const {dispatch} = useBoardNavList()
+    const storeDispatch = useAppDispatch()
     const router = useRouter()
 
     const deleteBoardHandle = () => {
         deleteBoard(slug)
-        dispatch({type: 'DELETE_BOARD_NAV', payload: {id: slug}})
+        storeDispatch(deleteBoardNav(slug))
         closeDialog()
         router.push(`/board`)
     }

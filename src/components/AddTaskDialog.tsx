@@ -9,9 +9,9 @@ import InputSelect from './InputSelect'
 import { validateRequired } from '@/utils/FormValidate.utils'
 import { v4 as uuidv4 } from 'uuid';
 import { useEditTaskForm } from '@/hooks/useEditTaskForm'
-import { useBoardData } from '@/context/useBoardDataContext'
-import { addTask } from '@/localAPI/TaskApi'
-
+import { addTask as addTaskToLocal } from '@/localAPI/TaskApi'
+import { useAppDispatch, useAppSelector } from '@/hooks/storeHooks'
+import { addTask } from '@/lib/features/tasks/tasksSlice'
 type Props = {
     isVisible: boolean;
     closeDialog: () => void;
@@ -19,7 +19,9 @@ type Props = {
 
 
 export default function AddTaskDialog({isVisible, closeDialog}: Props) {
-    const {state, dispatch} = useBoardData()
+    const storeDispatch = useAppDispatch()
+    const statusListState = useAppSelector(state => state.statusList)
+    const boardInfoState = useAppSelector(state => state.boardInfo)
     const {
         taskTitle, 
         description, 
@@ -38,13 +40,11 @@ export default function AddTaskDialog({isVisible, closeDialog}: Props) {
     } = useEditTaskForm();
 
     useEffect(() => {
-        if(!state) return;
-        state.statusList.length && setStatusId(state.statusList[0].id)
-        setColumns(state.statusList);
-    }, [state, setColumns, setStatusId])
+        statusListState.statusList.length && setStatusId(statusListState.statusList[0].id)
+        setColumns(statusListState.statusList);
+    }, [statusListState, setColumns, setStatusId])
 
     const saveTask = useCallback(() => {
-        if(!state) return;
         const subtasksData: Subtask[] = subtasks.map(item => {
             return {
                 id: uuidv4(),
@@ -59,10 +59,9 @@ export default function AddTaskDialog({isVisible, closeDialog}: Props) {
             subtasks: subtasksData, 
             statusId: statusId
         }
-        const id = addTask(state.id, taskData)
-        dispatch({type: "ADD_TASK", payload: {...taskData, id: id}})
-        return id;
-    }, [state, taskTitle, statusId, description,subtasks, dispatch])
+        const id = addTaskToLocal(boardInfoState.id, taskData)
+        storeDispatch(addTask({...taskData, id: id}))
+    }, [taskTitle, statusId, description,subtasks, boardInfoState, storeDispatch])
 
     const createTask = () => {
         notifySubtasks()

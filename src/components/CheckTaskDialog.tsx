@@ -3,12 +3,12 @@ import Dialog from './Dialog'
 import Image from 'next/image'
 import CheckListItem from './CheckListItem'
 import InputSelect from './InputSelect'
-import { useBoardData } from '@/context/useBoardDataContext'
 import { Task, StatusItem } from '@/lib/type'
 import { updateSubTaskStatus, updateTask } from '@/localAPI/TaskApi'
 import PopMenu from './PopMenu'
 import { useDialogs } from '@/context/useDialogsContext'
-
+import { useAppSelector, useAppDispatch } from '@/hooks/storeHooks'
+import { updateSubTaskIsCompleted, updateTask as updateTaskAction } from '@/lib/features/tasks/tasksSlice'
 type Props = {
     id: string;
     isVisible: boolean;
@@ -16,33 +16,33 @@ type Props = {
 }
 
 export default function CheckTaskDialog({id, isVisible, closeDialog}: Props) {
-    const {state, dispatch} = useBoardData()
     const {dispatch: dialogsDiapatch} = useDialogs()
     const [columns, setColumns] = useState<StatusItem[]>([])
-    const [statusId, setStatusId] = useState("")
     const [currentTask, setCurrentTask] = useState<Task | undefined>(undefined)
     const PopMenuTriggerRef = useRef<HTMLDivElement | null>(null)
     const [popMenuVisible, setPopMenuVisible] = useState(false)
+    const storeDispatch = useAppDispatch()
+    const statusListState = useAppSelector(state => state.statusList)
+    const tasksState = useAppSelector(state => state.tasks)
+    const boardInfoState = useAppSelector(state => state.boardInfo)
 
     useEffect(() => {
-        if(!state) return;
-        const tempTask = state.tasks.find(item => item.id === id)
+        const tempTask = tasksState.tasks.find(item => item.id === id)
+        if(!tempTask) return
         setCurrentTask(tempTask)
-        state.statusList.length > 0 && setColumns(state.statusList)
-        tempTask?.statusId && setStatusId(tempTask.statusId)
-    }, [state, id])
+        setColumns(statusListState.statusList)
+    }, [tasksState, statusListState, id])
 
-    const subtaskChange = useCallback((id: string, value: boolean) => {
-        if(!currentTask || !state) return;
-        dispatch({type: "UPDATE_SUBTASK", payload: {taskId: currentTask.id, subtaskId: id, isCompleted: value}})
-        updateSubTaskStatus(state.id, currentTask.id, id, value)
-    }, [state, currentTask, dispatch])
+    const subtaskChange = useCallback((subtaskId: string, isCompleted: boolean) => {
+        storeDispatch(updateSubTaskIsCompleted({taskId: id, subtaskId, isCompleted}))
+        updateSubTaskStatus(boardInfoState.id, id, subtaskId,  isCompleted)
+    }, [id, boardInfoState, storeDispatch])
 
     const taskStatusIdChange = useCallback((statusId: string) => {
-        if(!currentTask || !state) return;
-        dispatch({type: "UPDATE_TASK_STATUS_ID", payload: {taskId: currentTask.id, statusId: statusId}})
-        updateTask(state.id, {...currentTask, statusId: statusId})
-    }, [state, currentTask, dispatch])
+        if(!currentTask ) return;
+        storeDispatch(updateTaskAction({...currentTask, statusId}))
+        updateTask(boardInfoState.id, {...currentTask, statusId})
+    }, [ currentTask, storeDispatch, boardInfoState])
 
     const closePopMenu = () => {
         setPopMenuVisible(false)

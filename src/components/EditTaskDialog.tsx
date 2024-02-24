@@ -9,9 +9,9 @@ import InputSelect from './InputSelect'
 import { validateRequired } from '@/utils/FormValidate.utils'
 import { v4 as uuidv4 } from 'uuid';
 import { useEditTaskForm } from '@/hooks/useEditTaskForm'
-import { useBoardData } from '@/context/useBoardDataContext'
 import { updateTask as updateTaskToLocal } from '@/localAPI/TaskApi'
-
+import { useAppSelector, useAppDispatch } from '@/hooks/storeHooks'
+import { updateTask as updateTaskAction } from '@/lib/features/tasks/tasksSlice'
 type Props = {
     id: string;
     isVisible: boolean;
@@ -20,8 +20,11 @@ type Props = {
 
 
 export default function EditTaskDialog({isVisible, closeDialog, id}: Props) {
-    const {state, dispatch} = useBoardData()
     const [currentTask, setCurrentTask] = useState<Task | undefined>(undefined)
+    const storeDispatch = useAppDispatch()
+    const boardInfoState = useAppSelector(state => state.boardInfo)
+    const tasksState = useAppSelector(state => state.tasks)
+    const statusListState = useAppSelector(state => state.statusList)
     const {
         taskTitle, setTaskTitle,
         description, setDescription,
@@ -39,8 +42,7 @@ export default function EditTaskDialog({isVisible, closeDialog, id}: Props) {
     } = useEditTaskForm();
 
     useEffect(() => {
-        if(!state) return
-        const task = state.tasks.find(item => item.id === id)
+        const task = tasksState.tasks.find(item => item.id === id)
         if(!task) return
         setCurrentTask(task)
         setTaskTitle({
@@ -65,9 +67,9 @@ export default function EditTaskDialog({isVisible, closeDialog, id}: Props) {
                 }
             })
         })
-        setColumns(state.statusList)
+        setColumns(statusListState.statusList)
         setStatusId(task.statusId)
-    }, [state, setColumns, id, setTaskTitle, setDescription, setSubtasks, setStatusId])
+    }, [setColumns, id, setTaskTitle, setDescription, setSubtasks, setStatusId, statusListState, tasksState])
 
     function prepareUpdatedTaskData(currentTask: Task, taskTitle: InputTextProps, description: InputTextProps, statusId: string, subtasks: InputTextProps[]): Task {
         const updatedSubTasks: Subtask[] = subtasks.map(item => {
@@ -92,18 +94,16 @@ export default function EditTaskDialog({isVisible, closeDialog, id}: Props) {
     }
 
     const updateTask = useCallback( () => {
-        if(!currentTask || !state) return;
+        if(!currentTask) return;
         notifySubtasks()
         notifyTaskTitle()
         if(!taskTitle.valid || !validateSubtasks()) return;
         
         const updatedTaskData: Task = prepareUpdatedTaskData(currentTask, taskTitle, description, statusId, subtasks)
-
-        updateTaskToLocal(state.id, updatedTaskData)
-        
-        dispatch({type: "UPDATE_TASK", payload: updatedTaskData})
+        updateTaskToLocal(boardInfoState.id, updatedTaskData)
+        storeDispatch(updateTaskAction(updatedTaskData))
         closeDialog()
-    }, [state, currentTask, description, taskTitle, subtasks, dispatch, notifySubtasks, notifyTaskTitle, validateSubtasks, statusId, closeDialog])
+    }, [currentTask, description, taskTitle, subtasks, notifySubtasks, notifyTaskTitle, validateSubtasks, statusId, closeDialog, storeDispatch, boardInfoState])
     
     
     return (

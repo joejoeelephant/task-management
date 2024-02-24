@@ -1,8 +1,13 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
-import { useBoardData } from '@/context/useBoardDataContext'
 import { useDialogs } from '@/context/useDialogsContext'
+import { getBoard } from "@/localAPI/BoardApi";
+import { useParams } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
+import { updateBoardId, updateBoardName, setBoardIsLoaing, setErrorMessage } from "@/lib/features/boardInfo/boardInfo";
+import { setTasks } from '@/lib/features/tasks/tasksSlice'
+import { setStatusList } from '@/lib/features/statusList/statusListSlice'
 import './Header.css'
 
 type Props = {
@@ -12,24 +17,46 @@ type Props = {
 
 export default function Header({sidebarVisible, toggleSidebarVisible}: Props) {
     const [menuVisible, setMenuVisible] = useState(false)
-    const {state} = useBoardData()
-    const {dispatch} = useDialogs()
+    const {dispatch: dialogsDiapatch} = useDialogs()
+
+    const {slug} = useParams<{slug: string}>()
+    const storeDispatch = useAppDispatch()
+    const statusListState = useAppSelector(state => state.statusList)
+    useEffect(() => {
+        try {
+            storeDispatch(setBoardIsLoaing(true))
+            const boardData = getBoard(slug)
+            if(!boardData) throw new Error("board not found")
+            storeDispatch(setBoardIsLoaing(false))
+            storeDispatch(updateBoardId(boardData.id))
+            storeDispatch(updateBoardName(boardData.name))
+            storeDispatch(setTasks(boardData.tasks))
+            storeDispatch(setStatusList(boardData.statusList))
+            storeDispatch(setErrorMessage(""))
+        } catch (error) {
+            let errorMessage = 'An error occurred';
+            if (error instanceof Error) {
+                errorMessage = error.message;
+            }
+            storeDispatch(setErrorMessage(errorMessage))
+        }
+
+    }, [slug, storeDispatch])
 
     const showDeleteBoardAction = () => {
         setMenuVisible(false)
-        dispatch({type: "OPEN_DELETE_BOARD_DIALOG"})
+        dialogsDiapatch({type: "OPEN_DELETE_BOARD_DIALOG"})
     }
 
     const showEditBoardAction = () => {
         setMenuVisible(false)
-        dispatch({type: "OPEN_EDIT_BOARD_DIALOG"})
+        dialogsDiapatch({type: "OPEN_EDIT_BOARD_DIALOG"})
     }
 
-    const showAddTaskDialogAction = () => {
-        if(state && state.statusList.length < 1) return;
-        dispatch({type: "OPEN_ADD_TASK_DIALOG"})
-
-    }
+    const showAddTaskDialogAction = useCallback(() => {
+        if(statusListState.statusList.length < 1) return;
+        dialogsDiapatch({type: "OPEN_ADD_TASK_DIALOG"})
+    }, [statusListState, dialogsDiapatch])
     return (
         <>
             <header className='sticky w-full top-0 left-0 bg-white dark:bg-dark-grey z-20 flex items-center justify-between '>
@@ -51,7 +78,7 @@ export default function Header({sidebarVisible, toggleSidebarVisible}: Props) {
                         </div>
                     </div>
                     <div className='flex md:gap-1 items-center'>
-                        <div onClick={showAddTaskDialogAction} className={` select-none ${(state && state.statusList.length > 0) ? 'bg-primary-button-color cursor-pointer' : 'bg-primary-button-hover-color cursor-not-allowed'}  min-w-12 px-3 py-3 min-h-8 flex justify-center items-center rounded-3xl`}>
+                        <div onClick={showAddTaskDialogAction} className={` select-none ${(statusListState.statusList.length > 0) ? 'bg-primary-button-color cursor-pointer' : 'bg-primary-button-hover-color cursor-not-allowed'}  min-w-12 px-3 py-3 min-h-8 flex justify-center items-center rounded-3xl`}>
                             <Image src={'/images/icon-add-task-mobile.svg'} alt='add' width={10} height={10} className='w-2 mt-1'></Image>
                             <span className='hidden md:block text-heading-medium text-white'> Add New Task</span>
                         </div>

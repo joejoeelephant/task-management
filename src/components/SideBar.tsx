@@ -1,10 +1,9 @@
 import React, { CSSProperties, useEffect, useState } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
-import { useBoardNavList } from '@/context/useBoardNavContext'
 import NavBoardItem from './NavBoardItem'
-import AddBoardDialog from './AddBoardDialog'
 import { useDialogs } from '@/context/useDialogsContext'
+import { useAppDispatch, useAppSelector } from '@/hooks/storeHooks'
+import { fetchBoardNavList } from '@/lib/features/boardNavigationList/boardNavigationListSlice'
 import './SideBar.css'
 
 type SidebarProps = {
@@ -14,10 +13,15 @@ type SidebarProps = {
 }
 
 export default function SideBar({toggleTheme, toggleSidebar, isVisible}: SidebarProps) {
-    const {state: boardNavList} = useBoardNavList()
-    const {dispatch} = useDialogs()
+    const {dispatch: dialogDispatch} = useDialogs()
+    const dispatch = useAppDispatch()
+    const boardNavState = useAppSelector(state => state.boardNavList)
+    useEffect(() => {
+        dispatch(fetchBoardNavList())
+    }, [dispatch])
+
     const showAddBoardDialog = () => {
-        dispatch({type: "OPEN_ADD_BOARD_DIALOG"})
+        dialogDispatch({type: "OPEN_ADD_BOARD_DIALOG"})
     }
     return (
         <>
@@ -25,11 +29,11 @@ export default function SideBar({toggleTheme, toggleSidebar, isVisible}: Sidebar
                 <div className='h-[60vh] md:h-full overflow-auto relative bg-white dark:bg-dark-grey rounded-lg md:rounded-none w-9/12 md:w-full flex flex-col justify-between mx-auto mt-20 md:mt-0 scroller-decoration'>
                     <div>
                         <div className='text-heading-sm text-secondary-color p-5 sticky top-0 left-0 z-10 w-full bg-white dark:bg-dark-grey'>
-                            ALL BOARDS ({boardNavList.length})
+                            ALL BOARDS ({boardNavState.boardNavList.length})
                         </div>
                         <ul className='text-secondary-color pr-8'>
                             {
-                                boardNavList.map(item => {
+                                boardNavState.boardNavList.map(item => {
                                     return (
                                         <NavBoardItem key={item.id} id={item.id} name={item.name}/>
                                     )

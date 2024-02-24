@@ -1,14 +1,14 @@
 'use client'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useBoardNavList } from '@/context/useBoardNavContext'
+import { useAppSelector } from '@/hooks/storeHooks'
 
 export default function Page() {
-    const {state} = useBoardNavList()
+    const {boardNavList} = useAppSelector(state => state.boardNavList)
     const router = useRouter()
     useEffect(() => {
-        state.length > 0 && router.push(`/board/${state[state.length - 1].id}`)
-    }, [router,state])
+        boardNavList.length > 0 && router.push(`/board/${boardNavList[boardNavList.length - 1].id}`)
+    }, [router,boardNavList])
     return (
         <div>
             
