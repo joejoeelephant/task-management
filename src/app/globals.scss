@@ -1,3 +1,5 @@
+@use '../styles/index' as styles;
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -86,4 +88,16 @@
 .flow > * + *   {
     --top-gap: 1rem;
     margin-top: var(--top-gap);
+}
+
+.dark .primary-button,.primary-button {
+    @include styles.buttonMix-button(styles.$color-white, styles.$background-main-purple)
+}
+
+.secondary-button {
+    @include styles.buttonMix-button(styles.$color-main-purple, lighten($color: styles.$background-main-purple, $amount: 90%));
+}
+
+.dark .secondary-button {
+    @include styles.buttonMix-button(styles.$color-main-purple, lighten($color: styles.$background-white, $amount: 90%));
 }

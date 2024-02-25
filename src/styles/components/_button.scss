@@ -1,0 +1,16 @@
+@use "../abstract/background" as background;
+@use "../abstract/color" as color;
+
+@mixin button($color, $bg-color) {
+    padding: 1em;
+    background-color: $bg-color;
+    color: $color;
+    border-radius: 1.5rem;
+    text-align: center;
+    user-select: none;
+    cursor: pointer;
+    &:hover {
+        background-color: lighten($color: $bg-color, $amount: 10%);
+    }
+}
+

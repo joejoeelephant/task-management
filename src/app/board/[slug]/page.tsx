@@ -38,6 +38,7 @@ export default function Page() {
         <>
             <DragScrollContainer>
                 <div className={`absolute min-w-fit flex gap-6 p-4 md:p-6 min-h-full`}>
+                    
                     {
                         boardStatusListState.statusList.map((item, index) => {
                             return (
