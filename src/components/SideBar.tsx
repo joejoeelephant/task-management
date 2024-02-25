@@ -40,8 +40,8 @@ export default function SideBar({toggleTheme, toggleSidebar, isVisible}: Sidebar
                                 })
                             }
                             <li className='text-accent-color cursor-pointer' onClickCapture={showAddBoardDialog}>
-                                <div className={`flex gap-4 items-center text-heading-medium px-5 py-4 `}>
-                                    <div className={`w-4 h-4 board-icon bg-main-purple`} style={{'--mask-image-url': 'url("/images/icon-board.svg")'} as CSSProperties}></div>
+                                <div className={`board-nav-item `}>
+                                    <div className={`board-nav-icon bg-main-purple`} style={{'--mask-image-url': 'url("/images/icon-board.svg")'} as CSSProperties}></div>
                                     <div>
                                         + Create New Noard
                                     </div>
@@ -69,21 +69,17 @@ export default function SideBar({toggleTheme, toggleSidebar, isVisible}: Sidebar
                             </div>
                         </div>
                         <div className='
-                            hidden md:flex 
-                            gap-4 items-center 
-                            px-5 py-4 
-                            mt-2
-                            rounded-tl-none rounded-bl-none rounded-tr-full rounded-br-full
-                            hover:bg-secondary-button-hover-color text-secondary-color
-                            mr-8 hover:text-accent-color dark:hover:bg-white
-                            cursor-pointer nav-board-item'
+                            hidden md:flex
+                            mt-6 mr-8
+                            text-secondary-color
+                            board-nav-item'
                             onClickCapture={toggleSidebar}
                         >
                             <div className='w-5'>
-                                <div className={`w-4 h-4 board-icon bg-medium-grey `} style={{'--mask-image-url': 'url("/images/icon-hide-sidebar.svg")'} as CSSProperties}>
+                                <div className={`board-nav-icon bg-medium-grey `} style={{'--mask-image-url': 'url("/images/icon-hide-sidebar.svg")'} as CSSProperties}>
                                 </div>
                             </div>
-                            <div className='text-heading-medium  ' >
+                            <div>
                                 Hide Sidebar
                             </div>
                         </div>

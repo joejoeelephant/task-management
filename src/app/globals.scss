@@ -91,13 +91,60 @@
 }
 
 .dark .primary-button,.primary-button {
-    @include styles.buttonMix-button(styles.$color-white, styles.$background-main-purple)
+    @include styles.buttonMix-button(styles.$color-white, styles.$background-main-purple, lighten($color: styles.$background-main-purple, $amount: 10%))
 }
 
 .secondary-button {
-    @include styles.buttonMix-button(styles.$color-main-purple, lighten($color: styles.$background-main-purple, $amount: 90%));
+    @include styles.buttonMix-button(
+        styles.$color-main-purple, 
+        transparentize(styles.$background-main-purple, 0.9), 
+        transparentize(styles.$background-main-purple, 0.75)
+    );
 }
 
 .dark .secondary-button {
-    @include styles.buttonMix-button(styles.$color-main-purple, lighten($color: styles.$background-white, $amount: 90%));
+    @include styles.buttonMix-button(
+        styles.$color-main-purple, 
+        styles.$background-white, 
+        styles.$background-white
+    );
+}
+
+.dark .alert-button,.alert-button {
+    @include styles.buttonMix-button(
+        styles.$color-white, 
+        styles.$background-red, 
+        styles.$background-red-hover
+    );
+}
+
+.board-nav-item {
+    @apply flex gap-4 
+        items-center text-heading-medium 
+        px-5 py-4 cursor-pointer
+        rounded-tl-none rounded-bl-none 
+        rounded-tr-full rounded-br-full;
+
+    &:hover {
+        background-color: transparentize($color: styles.$background-main-purple, $amount: 0.9);
+        @apply text-accent-color;
+        .board-nav-icon {
+            background-color: styles.$background-main-purple;
+        }
+    }
+
+    .board-nav-icon {
+        mask-image: var(--mask-image-url);
+        @apply size-4;
+    }
+}
+
+.dark .board-nav-item {
+    &:hover {
+        background-color: styles.$background-white;
+        @apply text-accent-color;
+        .board-nav-icon {
+            background-color: styles.$background-main-purple;
+        }
+    }
 }
