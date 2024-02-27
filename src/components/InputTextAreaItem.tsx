@@ -63,7 +63,7 @@ export default function InputTextAreaItem({
                     className='p-1 w-full max-h-10 md:max-h-none overflow-y-auto dark:bg-dark-grey resize-none'
                 />
             </div>
-            <div className={`text-alert-color mt-3 ${errorMessage !== '' ? '' : 'hidden'}`}>
+            <div className={`text-danger-color mt-3 ${errorMessage !== '' ? '' : 'hidden'}`}>
                 {errorMessage}
             </div>
         </div>

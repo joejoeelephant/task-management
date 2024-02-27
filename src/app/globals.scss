@@ -141,7 +141,7 @@
 
     &:hover {
         background-color: transparentize($color: map-get(styles.$color-theme-colors, "primary"), $amount: 0.9);
-        @apply text-accent-color;
+        @apply text-primary-color;
         .board-nav-icon {
             background-color: map-get(styles.$color-theme-colors, "primary");
         }
@@ -156,7 +156,7 @@
 .dark .board-nav-item {
     &:hover {
         background-color: styles.$color-white;
-        @apply text-accent-color;
+        @apply text-primary-color;
         .board-nav-icon {
             background-color: map-get(styles.$color-theme-colors, "primary");
         }

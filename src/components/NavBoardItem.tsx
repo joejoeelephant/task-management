@@ -14,7 +14,7 @@ export default function NavBoardItem({id, name}: Props) {
         <li>
             <Link href={`/board/${id}`} className={
                     `board-nav-item 
-                    ${id === slug ? 'bg-main-purple text-white' : ''} 
+                    ${id === slug ? 'bg-primary-color text-white' : ''} 
                     `
                     
                 }

@@ -32,7 +32,7 @@ export default function DeleteTaskDialog({closeDialog, isVisible, id}: Props) {
     return (
         <Dialog isVisible={isVisible} closeDialog={closeDialog}>
             <div className=''>
-                <div className='text-alert-color text-heading-lg'>Delete this task?</div>
+                <div className='text-danger-color text-heading-lg'>Delete this task?</div>
                 <div className='text-secondary-color text-paragraph-medium mt-6'>
                     Are you sure you want to delete the ‘{taskData !== undefined && taskData.title}’ task and its subtasks? This action cannot be reversed.
                 </div>

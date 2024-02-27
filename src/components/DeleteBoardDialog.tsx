@@ -26,7 +26,7 @@ export default function DeleteBoardDialog({isVisible, closeDialog}: Props) {
     return (
         <Dialog isVisible={isVisible} closeDialog={closeDialog}>
             <div className=''>
-                <div className='text-alert-color text-heading-lg'>Delete this board?</div>
+                <div className='text-danger-color text-heading-lg'>Delete this board?</div>
                 <div className='text-secondary-color text-paragraph-medium mt-6'>
                     Are you sure you want to delete the ‘Platform Launch’ board? This action will remove all columns and tasks and cannot be reversed.
                 </div>

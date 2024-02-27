@@ -40,9 +40,9 @@ export default function SideBar({toggleTheme, toggleSidebar, isVisible}: Sidebar
                                     )
                                 })
                             }
-                            <li className='text-accent-color cursor-pointer' onClickCapture={showAddBoardDialog}>
+                            <li className='text-primary-color cursor-pointer' onClickCapture={showAddBoardDialog}>
                                 <div className={`board-nav-item `}>
-                                    <div className={`board-nav-icon bg-main-purple`} style={{'--mask-image-url': 'url("/images/icon-board.svg")'} as CSSProperties}></div>
+                                    <div className={`board-nav-icon bg-primary-color`} style={{'--mask-image-url': 'url("/images/icon-board.svg")'} as CSSProperties}></div>
                                     <div>
                                         + Create New Noard
                                     </div>
@@ -59,7 +59,7 @@ export default function SideBar({toggleTheme, toggleSidebar, isVisible}: Sidebar
                                 <div>
                                     <label onChangeCapture={toggleTheme} className='cursor-pointer'>
                                         <input type="checkbox" className='theme-checkbox hidden'/>
-                                        <div className='rounded-xl w-10 h-5 bg-main-purple px-0.5 flex items-center theme-switch'>
+                                        <div className='rounded-xl w-10 h-5 bg-primary-color px-0.5 flex items-center theme-switch'>
                                             <div className='w-3 h-3 rounded-full bg-white transition-all'></div>
                                         </div>
                                     </label>

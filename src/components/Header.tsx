@@ -78,7 +78,7 @@ export default function Header({sidebarVisible, toggleSidebarVisible}: Props) {
                         </div>
                     </div>
                     <div className='flex md:gap-1 items-center'>
-                        <div onClick={showAddTaskDialogAction} className={` select-none ${(statusListState.statusList.length > 0) ? 'bg-primary-button-color cursor-pointer' : 'bg-primary-button-hover-color cursor-not-allowed'}  min-w-12 px-3 py-3 min-h-8 flex justify-center items-center rounded-3xl`}>
+                        <div onClick={showAddTaskDialogAction} className={` select-none ${(statusListState.statusList.length > 0) ? 'bg-primary-color cursor-pointer' : 'bg-primary-button-hover-color cursor-not-allowed'}  min-w-12 px-3 py-3 min-h-8 flex justify-center items-center rounded-3xl`}>
                             <Image src={'/images/icon-add-task-mobile.svg'} alt='add' width={10} height={10} className='w-2 mt-1'></Image>
                             <span className='hidden md:block text-heading-medium text-white'> Add New Task</span>
                         </div>
@@ -92,7 +92,7 @@ export default function Header({sidebarVisible, toggleSidebarVisible}: Props) {
                         <div className='text-secondary-color cursor-pointer' onClick={showEditBoardAction}>
                             Edit Board
                         </div>
-                        <div className='text-alert-color mt-5 cursor-pointer' onClick={showDeleteBoardAction}>
+                        <div className='text-danger-color mt-5 cursor-pointer' onClick={showDeleteBoardAction}>
                             Delete Board
                         </div>
                     </div>

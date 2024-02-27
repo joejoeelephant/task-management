@@ -118,7 +118,7 @@ export default function CheckTaskDialog({id, isVisible, closeDialog}: Props) {
                     <div className='text-secondary-color cursor-pointer' onClick={openEditTaskDialog}>
                         Edit Task
                     </div>
-                    <div className='text-alert-color mt-5 cursor-pointer' onClick={openDeleteTaskDialog}>
+                    <div className='text-danger-color mt-5 cursor-pointer' onClick={openDeleteTaskDialog}>
                         Delete Task
                     </div>
                 </div>
