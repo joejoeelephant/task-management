@@ -1,6 +1,3 @@
-@use "../abstract/background" as background;
-@use "../abstract/color" as color;
-
 @mixin button($color, $bg-color, $bg-hover-color) {
     padding: 1em;
     background-color: $bg-color;

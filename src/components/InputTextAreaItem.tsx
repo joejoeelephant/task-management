@@ -51,7 +51,7 @@ export default function InputTextAreaItem({
     };
 
     return (
-        <div className={`items-center border  ${errorMessage !== "" ? 'border-input-alert-color' : 'border-input-default-color'} text-paragraph-medium p-1 px-4 rounded-md`}>
+        <div className={`items-center border  ${errorMessage !== "" ? 'border-danger-color' : 'border-input-default-color'} text-paragraph-medium p-1 px-4 rounded-md`}>
             <div className=''>
                 <textarea
                     rows={rows}

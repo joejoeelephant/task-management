@@ -8,7 +8,7 @@ export default function TaskItem({taskData}: {taskData: Task}) {
     }
     return (
         <div onClick={openCheckTaskDialog} className='px-4 py-6 rounded-xl shadow-lg shadow-light-medium-grey dark:shadow-very-dark-grey bg-white dark:bg-dark-grey cursor-pointer select-none'>
-            <div className='text-heading-medium text-primary-heading-color dark:text-primary-dark-heading-color'>
+            <div className='text-heading-medium text-heading-color dark:text-primary-dark-heading-color'>
                 {taskData.title}
             </div>
             <div className='mt-4 text-paragraph-medium text-secondary-color'>

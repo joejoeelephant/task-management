@@ -70,7 +70,7 @@ export default function Header({sidebarVisible, toggleSidebarVisible}: Props) {
                 <div className='flex-1 self-stretch flex justify-between items-center px-4 md:px-6 md:border-b border-line-color dark:border-line-dark-color'>
                     <div className='relative flex items-center gap-1'>
                         <div className='logo-mask absolute left-0 top-0 w-full h-full md:hidden ' onClickCapture={toggleSidebarVisible}></div>
-                        <h1 className='text-heading-lg md:text-heading-xl text-primary-heading-color dark:text-white'>
+                        <h1 className='text-heading-lg md:text-heading-xl text-heading-color dark:text-white'>
                             Platform Launch
                         </h1>
                         <div className='w-3 md:hidden'>

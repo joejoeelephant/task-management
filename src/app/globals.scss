@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '../styles/index' as styles;
 
 @tailwind base;
@@ -17,19 +18,24 @@
 
 }
 
-@media (min-width: 768px) {
-    :root {
-        --sidebar-width: 261px;
-        --sidebar-inner-width: 261px;
-        --header-height: 5rem;
-    }
-}
-
-@media (min-width: 1024px) {
-    :root {
-        --sidebar-width: 300px;
-        --sidebar-inner-width: 300px;
-        --header-height: 6rem;
+// Define media queries based on breakpoints
+@each $breakpoint, $value in styles.$layout-breakpoints {
+    @if $breakpoint == 'md' {
+      @media (min-width: $value) {
+        :root {
+          --header-height: 5rem; 
+          --sidebar-width: 261px;
+          --sidebar-inner-width: 261px;
+        }
+      }
+    } @else if $breakpoint == 'lg' {
+      @media (min-width: $value) {
+        :root {
+          --header-height: 6rem; 
+          --sidebar-width: 300px;
+          --sidebar-inner-width: 300px;
+        }
+      }
     }
 }
 
@@ -47,31 +53,35 @@
     grid-template-rows: var(--header-height) calc(100svh - var(--header-height));
 }
 
-/* Style the scrollbar track (the part the thumb moves within) */
+
+
+/*scroller style start */
 .scroller-decoration::-webkit-scrollbar-track {
-    background-color: var(--light-grey);
+    background-color: styles.$color-scroller-track-color;
     border-radius: 10px;
 }
 
 .dark .scroller-decoration::-webkit-scrollbar-track {
-    background-color: var(--dark-grey);
+    background-color: styles.$color-scroller-track-on-dark-color;
     border-radius: 10px;
 }
 
 /* Style the scrollbar thumb (the draggable element) */
 .scroller-decoration::-webkit-scrollbar-thumb {
-    background-color: var(--line-color);
+    background-color: styles.$color-scroller-thumb-color;
     border-radius: 10px;
+}
+/* Hover styles for the scrollbar thumb */
+.scroller-decoration::-webkit-scrollbar-thumb:hover {
+    background-color: darken($color: styles.$color-scroller-thumb-color, $amount: 5%);
 }
 
 .dark .scroller-decoration::-webkit-scrollbar-thumb {
-    background-color: var(--very-dark-grey);
-    border-radius: 10px;
+    background-color: styles.$color-scroller-thumb-on-dark-color;
 }
 
-/* Hover styles for the scrollbar thumb */
-.scroller-decoration::-webkit-scrollbar-thumb:hover {
-    background-color: var(--medium-grey);
+.dark .scroller-decoration::-webkit-scrollbar-thumb:hover {
+    background-color: styles.tint-color(styles.$color-scroller-thumb-on-dark-color, 10%);
 }
 
 /* Style the width of the scrollbar */
@@ -79,6 +89,7 @@
     width: 8px; /* Adjust the width of the scrollbar here */
     height: 8px;
 }
+/*scroller style end */
 
 .icon-box {
     mask-image: var(--mask-image-url);
@@ -90,34 +101,37 @@
     margin-top: var(--top-gap);
 }
 
+// button
 .dark .primary-button,.primary-button {
-    @include styles.buttonMix-button(styles.$color-white, styles.$background-main-purple, lighten($color: styles.$background-main-purple, $amount: 10%))
+    @include styles.buttonMix-button(styles.$color-white, map-get(styles.$color-theme-colors, "primary"), lighten($color: map-get(styles.$color-theme-colors, "primary"), $amount: 10%))
 }
 
 .secondary-button {
     @include styles.buttonMix-button(
-        styles.$color-main-purple, 
-        transparentize(styles.$background-main-purple, 0.9), 
-        transparentize(styles.$background-main-purple, 0.75)
+        map-get(styles.$color-theme-colors, "primary"), 
+        transparentize(map-get(styles.$color-theme-colors, "primary"), 0.9), 
+        transparentize(map-get(styles.$color-theme-colors, "primary"), 0.75)
     );
 }
 
 .dark .secondary-button {
     @include styles.buttonMix-button(
-        styles.$color-main-purple, 
-        styles.$background-white, 
-        styles.$background-white
+        styles.$color-primary-text-emphasis, 
+        styles.$color-white, 
+        styles.$color-white
     );
 }
 
 .dark .alert-button,.alert-button {
     @include styles.buttonMix-button(
         styles.$color-white, 
-        styles.$background-red, 
-        styles.$background-red-hover
+        map-get(styles.$color-theme-colors, "danger"), 
+        styles.$color-red-hover
     );
 }
+//button
 
+// board-nav-item
 .board-nav-item {
     @apply flex gap-4 
         items-center text-heading-medium 
@@ -126,10 +140,10 @@
         rounded-tr-full rounded-br-full;
 
     &:hover {
-        background-color: transparentize($color: styles.$background-main-purple, $amount: 0.9);
+        background-color: transparentize($color: map-get(styles.$color-theme-colors, "primary"), $amount: 0.9);
         @apply text-accent-color;
         .board-nav-icon {
-            background-color: styles.$background-main-purple;
+            background-color: map-get(styles.$color-theme-colors, "primary");
         }
     }
 
@@ -141,10 +155,11 @@
 
 .dark .board-nav-item {
     &:hover {
-        background-color: styles.$background-white;
+        background-color: styles.$color-white;
         @apply text-accent-color;
         .board-nav-icon {
-            background-color: styles.$background-main-purple;
+            background-color: map-get(styles.$color-theme-colors, "primary");
         }
     }
 }
+// board-nav-item

@@ -1,5 +1,28 @@
 import type { Config } from "tailwindcss";
 
+const colors = {
+  'main-purple': '#635FC7',
+  'main-purple-hover': '#A8A4FF',
+  'black': '#000112',
+  'white': '#fff',
+  'red': '#EA5555',
+  'red-hover': '#FF9898',
+  'medium-grey': '#828FA3',
+  'dark-grey': '#2B2C37',
+  'very-dark-grey': '#20212C',
+  'light-grey': '#F4F7FD',
+  'line-dark': '#3E3F4E',
+  'line-light': '#E4EBFA'
+}
+
+const themeColors = {
+  primary: colors['main-purple'],
+  secondary: colors['medium-grey'],
+  danger: colors['red'],
+  light: colors['white'],
+  dark: colors['dark-grey']
+}
+
 const config: Config = {
   darkMode: 'class',
   content: [
@@ -30,12 +53,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'primary-heading-color': '#000112', 
-        'primary-dark-heading-color': '#FFFFFF', 
-        'primary-paragraph-color': '#2B2C37',
-        'secondary-color': '#828FA3', 
-        'accent-color': '#635FC7',
-        'alert-color': '#EA5555'
+        'heading-color': colors['black'], 
+        'primary-dark-heading-color': colors['white'], 
+        'primary-paragraph-color': colors['dark-grey'],
+        'accent-color': themeColors['primary'],
+        'alert-color': themeColors['danger'],
+
+        'primary-color': themeColors['primary'],
+        'secondary-color': themeColors['secondary'],
+        'danger-color': themeColors['danger'],
+        'light-color': themeColors['light'],
+        'dark-color': themeColors['dark']
       },
       fontSize: {
         'heading-xl': [
@@ -98,21 +126,30 @@ const config: Config = {
         'secondary-dark-button-color': '#FFF',
         'secondary-dark-button-hover-color': '#FFF',
         'alert-button-color': '#EA5555',
-        'alert-button-hover-color': '#FF9898'
+        'alert-button-hover-color': '#FF9898',
+
+        'primary-color': themeColors['primary'],
+        'secondary-color': themeColors['secondary'],
+        'danger-color': themeColors['danger'],
+        'light-color': themeColors['light'],
+        'dark-color': themeColors['dark']
 
       },
       borderColor: {
-        'input-default-color': 'rgba(130, 143, 163,0.25)',
-        'input-alert-color': '#EA5555',
-        'input-active-color': '#635FC7',
-        'line-color': '#E4EBFA',
-        'line-dark-color': '#3E3F4E'
+        'input-default-color': 'rgba(130, 143, 163, 0.25)',
+        'line-color': colors['line-light'],
+        'line-dark-color': colors['line-dark'],
+
+        'primary-color': themeColors['primary'],
+        'secondary-color': themeColors['secondary'],
+        'danger-color': themeColors['danger'],
+        'light-color': themeColors['light'],
+        'dark-color': themeColors['dark']
       },
       boxShadowColor: {
-        'light-medium-grey': '#E4EBFA',
-        'medium-grey': '#828FA3',
-        'very-dark-grey': '#20212C',
-
+        'light-medium-grey': colors['line-light'],
+        'medium-grey': colors['medium-grey'],
+        'very-dark-grey': colors['very-dark-grey'],
       }
 
     },

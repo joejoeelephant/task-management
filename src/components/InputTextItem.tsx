@@ -47,7 +47,7 @@ export default function InputTextItem({
     };
 
     return (
-        <div className={`flex gap-3 items-center border rounded-md  ${errorMessage !== "" ? 'border-input-alert-color' : 'border-input-default-color'} text-paragraph-medium p-1 px-4`}>
+        <div className={`flex gap-3 items-center border rounded-md  ${errorMessage !== "" ? 'border-danger-color' : 'border-input-default-color'} text-paragraph-medium p-1 px-4`}>
             <div className='flex-1'>
                 <input
                     ref={inputRef}

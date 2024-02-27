@@ -17,7 +17,7 @@ export default function CheckListItem({id, name, value, checked, onChange}: Prop
             <div className='w-4 h-4 shrink-0 bg-white flex justify-center items-center rounded-sm check-list-checkbox-ui'>
                 <Image src={'/images/icon-check.svg'} alt='check' width={10} height={8} className='w-2'/>
             </div>
-            <div className='text-paragraph-xs font-bold text-primary-heading-color dark:text-primary-dark-heading-color break-all check-list-item-value'>
+            <div className='text-paragraph-xs font-bold text-heading-color dark:text-primary-dark-heading-color break-all check-list-item-value'>
                 {value}
             </div>
         </label>

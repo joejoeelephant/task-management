@@ -16,6 +16,7 @@ export default function SideBar({toggleTheme, toggleSidebar, isVisible}: Sidebar
     const {dispatch: dialogDispatch} = useDialogs()
     const dispatch = useAppDispatch()
     const boardNavState = useAppSelector(state => state.boardNavList)
+
     useEffect(() => {
         dispatch(fetchBoardNavList())
     }, [dispatch])

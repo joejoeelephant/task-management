@@ -1,4 +1,4 @@
+@forward "./functions/functions";
 @forward "./components/button" as buttonMix-*;
-@forward "./abstract/background" as background-*;
-@forward "./abstract/color" as color-*;
-
+@forward "./abstract/colors" as color-*;
+@forward "./abstract/layout" as layout-*;
