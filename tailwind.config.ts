@@ -54,7 +54,10 @@ const config: Config = {
     extend: {
       colors: {
         'heading-color': colors['black'], 
-        'heading-on-dark-color': colors['white'], 
+        'primary-dark-heading-color': colors['white'], 
+        'primary-paragraph-color': colors['dark-grey'],
+        'accent-color': themeColors['primary'],
+        'alert-color': themeColors['danger'],
 
         'primary-color': themeColors['primary'],
         'secondary-color': themeColors['secondary'],
@@ -109,12 +112,21 @@ const config: Config = {
 
       },
       backgroundColor: {
-        'light-grey': colors['light-grey'],
-        'very-dark-grey': colors['very-dark-grey'],
-        'medium-grey': colors['medium-grey'],
-        'light-medium-grey': colors['line-light'],
-        'dark-grey': colors['dark-grey'],
-        'primary-button-hover-color': colors['main-purple-hover'],
+        'light-grey': '#F4F7FD',
+        'very-dark-grey': '#20212C',
+        'medium-grey': '#828FA3',
+        'light-medium-grey': '#E4EBFA',
+        'dark-grey': '#2B2C37',
+        'main-purple': '#635FC7',
+        'secondary-purple': '#A8A4FF',
+        'primary-button-color': '#635FC7',
+        'primary-button-hover-color': '#A8A4FF',
+        'secondary-button-color': 'rgba(99, 95, 199,0.1)',
+        'secondary-button-hover-color': 'rgba(99, 95, 199,0.25)',
+        'secondary-dark-button-color': '#FFF',
+        'secondary-dark-button-hover-color': '#FFF',
+        'alert-button-color': '#EA5555',
+        'alert-button-hover-color': '#FF9898',
 
         'primary-color': themeColors['primary'],
         'secondary-color': themeColors['secondary'],

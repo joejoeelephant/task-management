@@ -6,7 +6,7 @@ export default function ColumnEmptyScreen() {
     return (
         <>
             <div className='w-full h-full flex flex-col gap-6 justify-center items-center px-6'>
-                <p className='text-heading-lg text-secondary-color dark:text-heading-on-dark-color text-center'>
+                <p className='text-heading-lg text-secondary-color dark:text-primary-dark-heading-color text-center'>
                     This board is empty. Create a new column to get started.
                 </p>
                 <div>

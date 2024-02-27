@@ -59,7 +59,7 @@ export default function InputTextItem({
                     className='p-1 w-full dark:bg-dark-grey'
                 />
             </div>
-            <div className='text-danger-color'>
+            <div className='text-alert-color'>
                 {errorMessage}
             </div>
         </div>

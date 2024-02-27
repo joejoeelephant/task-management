@@ -45,7 +45,7 @@ export default function InputSelect({options, onChange, initValue}: Props) {
                     <Image src={`${isOptionsShow ? '/images/icon-chevron-up.svg' : '/images/icon-chevron-down.svg'}`} alt='icon-chevron' width={10} height={7} className='w-3'></Image>
                 </div>
             </div>
-            <div data-testid="options-wrapper" className={`${isOptionsShow ? '' : 'hidden'} py-2 bg-white border dark:border-line-dark-color dark:bg-very-dark-grey rounded-lg overflow-hidden w-full absolute bottom-12 md:top-12 md:bottom-auto left-0 text-heading-color dark:text-heading-on-dark-color`}>
+            <div data-testid="options-wrapper" className={`${isOptionsShow ? '' : 'hidden'} py-2 bg-white border dark:border-line-dark-color dark:bg-very-dark-grey rounded-lg overflow-hidden w-full absolute bottom-12 md:top-12 md:bottom-auto left-0 text-heading-color dark:text-primary-dark-heading-color`}>
                 {
                     options.map((item, i) => {
                         return (
