@@ -138,6 +138,7 @@ export function useEditTaskForm() {
         description, setDescription,
         subtasks, setSubtasks,
         columns, setColumns,
+        initColumns,
         statusId, setStatusId,
         initEditTaskForm,
         updateTaskTitle,

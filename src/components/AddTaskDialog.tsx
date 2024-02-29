@@ -27,7 +27,7 @@ export default function AddTaskDialog({isVisible, closeDialog}: Props) {
         description, 
         subtasks,
         statusId,setStatusId,
-        columns, setColumns,
+        columns, initColumns,
         updateTaskTitle,
         notifyTaskTitle,
         updateDescription,
@@ -41,7 +41,8 @@ export default function AddTaskDialog({isVisible, closeDialog}: Props) {
 
     useEffect(() => {
         statusListState.statusList.length && setStatusId(statusListState.statusList[0].id)
-    }, [statusListState, setStatusId])
+        initColumns(statusListState.statusList)
+    }, [statusListState, setStatusId, initColumns])
 
     const saveTask = useCallback(() => {
         const subtasksData: Subtask[] = subtasks.map(item => {
