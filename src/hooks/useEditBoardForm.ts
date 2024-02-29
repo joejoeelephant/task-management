@@ -12,7 +12,7 @@ export function useEditBoardForm() {
         valid: false,
         shouldValidate: false,
     });
-    
+
     const [columns, setColumns] = useState<InputTextProps[]>([])
     
     const boardNameChange = ({value, valid}:InputTextProps) => {
@@ -76,6 +76,24 @@ export function useEditBoardForm() {
         setColumns([])
     }
 
+    const initBoardName = useCallback((boardName: string) => {
+        setBoardName({
+            id: uuidv4(),
+            value: boardName,
+            valid: true,// must be true
+            shouldValidate: false,
+        })
+    }, [])
+
+    const initColumns = useCallback((statusList: StatusItem[]) => {
+        setColumns(statusList.map(item => ({
+            id: item.id,
+            value: item.value,
+            valid: true,// must be true
+            shouldValidate: false,
+        })));
+    }, [])
+
     return {
         boardName, 
         columns, 
@@ -90,5 +108,7 @@ export function useEditBoardForm() {
         addColumn,
         deleteColumnById,
         resetEditBoardForm,
+        initBoardName,
+        initColumns
     }
 }

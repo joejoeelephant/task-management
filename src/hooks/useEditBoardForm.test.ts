@@ -147,4 +147,34 @@ describe('useEditBoardForm', () => {
         expect(result.current.columns.length).toBe(0);
 
     });
+
+    it('init boardName', () => {
+        const { result } = renderHook(() => useEditBoardForm());
+
+        act(() => {
+            result.current.initBoardName("boardName");
+        });
+
+        expect(result.current.boardName.value).toBe("boardName");
+        expect(result.current.boardName.valid).toBe(true);
+
+    })
+
+    it('init columns', () => {
+        const { result } = renderHook(() => useEditBoardForm());
+        const statusList = [
+            {id: "1", value: "column1"},
+            {id: "2", value: "column2"}
+        ]
+
+        act(() => {
+            result.current.initColumns(statusList);
+        });
+
+        result.current.columns.map((item, i) => {
+            expect(item.value).toBe(statusList[i].value);
+            expect(item.valid).toBe(true);
+        })
+
+    })
 });

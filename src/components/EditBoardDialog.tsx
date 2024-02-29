@@ -20,13 +20,11 @@ type Props = {
 export default function EditBoardDialog({isVisible, closeDialog}: Props) {
     const storeDispatch = useAppDispatch()
     const boardInfoState = useAppSelector(state => state.boardInfo)
-    const statusListState = useAppSelector(state => state.statusList)
+    const {statusList} = useAppSelector(state => state.statusList)
 
     const {
         boardName, 
         columns,
-        setBoardName, 
-        setColumns, 
         boardNameChange,
         notifyBoardName,
         notifyColumns,
@@ -34,23 +32,16 @@ export default function EditBoardDialog({isVisible, closeDialog}: Props) {
         validateColumns,
         validateColumn,
         addColumn,
-        deleteColumnById 
+        deleteColumnById ,
+        initBoardName,
+        initColumns
     } = useEditBoardForm()
 
     const initBoardDialog = useCallback(() => {
-        setBoardName({
-            id: uuidv4(),
-            value: boardInfoState.name,
-            valid: true,// must be true
-            shouldValidate: false,
-        });
-        setColumns(statusListState.statusList.map(item => ({
-            id: item.id,
-            value: item.value,
-            valid: true,// must be true
-            shouldValidate: false,
-        })));
-    }, [boardInfoState.name,statusListState, setBoardName, setColumns])
+        initBoardName(boardInfoState.name)
+
+        initColumns(statusList)
+    }, [boardInfoState, statusList, initBoardName, initColumns])
 
     useEffect(() => {
         initBoardDialog()
