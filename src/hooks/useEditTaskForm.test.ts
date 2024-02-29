@@ -138,13 +138,15 @@ describe('useEditTaskForm', () => {
             ],
             statusId: 'status123',
         };
+
+        const statusList = [{id: "1", value: "column1"}]
     
         // Render the hook in an isolated test environment
         const { result } = renderHook(() => useEditTaskForm());
     
         // Act to simulate running the initEditTaskForm function with the taskData
         act(() => {
-            result.current.initEditTaskForm(taskData);
+            result.current.initEditTaskForm(taskData, statusList);
         });
         
         expect(result.current.taskTitle.value).toBe(taskData.title);

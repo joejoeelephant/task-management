@@ -23,7 +23,9 @@ export default function EditTaskDialog({isVisible, closeDialog, id}: Props) {
     const [currentTask, setCurrentTask] = useState<Task | undefined>(undefined)
     const storeDispatch = useAppDispatch()
     const boardInfoState = useAppSelector(state => state.boardInfo)
-    const tasksState = useAppSelector(state => state.tasks)
+    const {tasks} = useAppSelector(state => state.tasks)
+    const {statusList} = useAppSelector(state =>  state.statusList)
+
     const {
         taskTitle, 
         description, 
@@ -43,11 +45,11 @@ export default function EditTaskDialog({isVisible, closeDialog, id}: Props) {
 
 
     useEffect(() => {
-        const task = tasksState.tasks.find(item => item.id === id)
+        const task = tasks.find(item => item.id === id)
         if(!task) return
         setCurrentTask(task);
-        initEditTaskForm(task)
-    }, [id, tasksState, initEditTaskForm])
+        initEditTaskForm(task, statusList)
+    }, [id, tasks, statusList, initEditTaskForm])
 
     function prepareUpdatedTaskData(currentTask: Task, taskTitle: InputTextProps, description: InputTextProps, statusId: string, subtasks: InputTextProps[]): Task {
         const updatedSubTasks: Subtask[] = subtasks.map(item => {

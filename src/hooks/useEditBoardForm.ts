@@ -12,10 +12,8 @@ export function useEditBoardForm() {
         valid: false,
         shouldValidate: false,
     });
-
-    const [columns, setColumns] = useState<InputTextProps[]>([]);
-
     
+    const [columns, setColumns] = useState<InputTextProps[]>([])
     
     const boardNameChange = ({value, valid}:InputTextProps) => {
         setBoardName(prev => {return {...prev, value, valid}})
@@ -91,6 +89,6 @@ export function useEditBoardForm() {
         validateColumn,
         addColumn,
         deleteColumnById,
-        resetEditBoardForm
+        resetEditBoardForm,
     }
 }

@@ -1,11 +1,8 @@
 import { useState, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { InputTextProps, InputTextAreaProps, Task, Subtask} from '@/lib/type'
-import { useAppSelector, useAppDispatch } from '@/hooks/storeHooks'
-
+import { InputTextProps, InputTextAreaProps, Task, Subtask, StatusItem} from '@/lib/type'
 
 export function useEditTaskForm() {
-    const {statusList} = useAppSelector(state =>  state.statusList)
 
     const [taskTitle, setTaskTitle] = useState<InputTextProps>({
         id: uuidv4(),
@@ -124,16 +121,16 @@ export function useEditTaskForm() {
         })
     }
 
-    const initColumns = useCallback(() => {
+    const initColumns = useCallback((statusList: StatusItem[]) => {
         setColumns(statusList)
-    }, [statusList])
+    }, [])
 
-    const initEditTaskForm = useCallback((taskData: Task) => {
+    const initEditTaskForm = useCallback((taskData: Task, statusList: StatusItem[]) => {
         initTaskTitle(taskData.title)
         initDescription(taskData.description)
         initSubTasks(taskData.subtasks)
         setStatusId(taskData.statusId)
-        initColumns()
+        initColumns(statusList)
     }, [initColumns])
 
     return {
