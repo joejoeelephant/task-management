@@ -24,13 +24,13 @@ export default function EditTaskDialog({isVisible, closeDialog, id}: Props) {
     const storeDispatch = useAppDispatch()
     const boardInfoState = useAppSelector(state => state.boardInfo)
     const tasksState = useAppSelector(state => state.tasks)
-    const statusListState = useAppSelector(state => state.statusList)
     const {
-        taskTitle, setTaskTitle,
-        description, setDescription,
-        subtasks, setSubtasks,
-        columns, setColumns,
+        taskTitle, 
+        description, 
+        subtasks, 
+        columns, 
         statusId, setStatusId,
+        initEditTaskForm,
         updateTaskTitle,
         notifyTaskTitle,
         updateDescription,
@@ -41,35 +41,13 @@ export default function EditTaskDialog({isVisible, closeDialog, id}: Props) {
         updateSubTaskById
     } = useEditTaskForm();
 
+
     useEffect(() => {
         const task = tasksState.tasks.find(item => item.id === id)
         if(!task) return
-        setCurrentTask(task)
-        setTaskTitle({
-            id: uuidv4(),
-            value: task.title,
-            valid: true,// must be true
-            shouldValidate: false,
-        })
-        setDescription({
-            id: uuidv4(),
-            value: task.description,
-            valid: true,// must be true
-            shouldValidate: false,
-        })
-        setSubtasks(() => {
-            return task.subtasks.map(item => {
-                return {
-                    id: item.id,
-                    value: item.title,
-                    valid: true,
-                    shouldValidate: false,
-                }
-            })
-        })
-        setColumns(statusListState.statusList)
-        setStatusId(task.statusId)
-    }, [setColumns, id, setTaskTitle, setDescription, setSubtasks, setStatusId, statusListState, tasksState])
+        setCurrentTask(task);
+        initEditTaskForm(task)
+    }, [id, tasksState, initEditTaskForm])
 
     function prepareUpdatedTaskData(currentTask: Task, taskTitle: InputTextProps, description: InputTextProps, statusId: string, subtasks: InputTextProps[]): Task {
         const updatedSubTasks: Subtask[] = subtasks.map(item => {

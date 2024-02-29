@@ -1,6 +1,7 @@
 import { renderHook, act } from "@testing-library/react";
 import { useEditTaskForm } from "./useEditTaskForm";
-import { v4 as uuidv4 } from "uuid";
+import { Task } from "@/lib/type";
+
 describe('useEditTaskForm', () => {
     it('initializes with default values', () => {
         const { result } = renderHook(() => useEditTaskForm());
@@ -124,4 +125,38 @@ describe('useEditTaskForm', () => {
         expect(result.current.columns.length).toBe(0);
         expect(result.current.statusId).toBe('');
     });
+
+    it('should initialize form with task data', () => {
+        
+        const taskData: Task = {
+            id: "task1",
+            title: 'Test Task',
+            description: 'Test Description',
+            subtasks: [
+                { id: 'subtask1', title: 'Subtask 1', isCompleted: false },
+                { id: 'subtask2', title: 'Subtask 2', isCompleted: false },
+            ],
+            statusId: 'status123',
+        };
+    
+        // Render the hook in an isolated test environment
+        const { result } = renderHook(() => useEditTaskForm());
+    
+        // Act to simulate running the initEditTaskForm function with the taskData
+        act(() => {
+            result.current.initEditTaskForm(taskData);
+        });
+        
+        expect(result.current.taskTitle.value).toBe(taskData.title);
+        expect(result.current.taskTitle.valid).toBe(true);
+
+        expect(result.current.description.value).toBe(taskData.description);
+        expect(result.current.description.valid).toBe(true);
+
+        result.current.subtasks.map(item => {
+            expect(item.valid).toBe(true)
+        })
+
+        expect(result.current.statusId).toBe(taskData.statusId);
+      });
 });

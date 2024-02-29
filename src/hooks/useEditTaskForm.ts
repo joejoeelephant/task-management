@@ -1,8 +1,12 @@
 import { useState, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { InputTextProps, InputTextAreaProps} from '@/lib/type'
+import { InputTextProps, InputTextAreaProps, Task, Subtask} from '@/lib/type'
+import { useAppSelector, useAppDispatch } from '@/hooks/storeHooks'
+
 
 export function useEditTaskForm() {
+    const {statusList} = useAppSelector(state =>  state.statusList)
+
     const [taskTitle, setTaskTitle] = useState<InputTextProps>({
         id: uuidv4(),
         value: "",
@@ -89,12 +93,56 @@ export function useEditTaskForm() {
         setStatusId("")
     }
 
+    const initTaskTitle = (title: string) => {
+        setTaskTitle({
+            id: uuidv4(),
+            value: title,
+            valid: true,// must be true
+            shouldValidate: false,
+        })
+    }
+
+    const initDescription = (description: string) => {
+        setDescription({
+            id: uuidv4(),
+            value: description,
+            valid: true,// must be true
+            shouldValidate: false,
+        })
+    }
+
+    const initSubTasks = (subtasks: Subtask[]) => {
+        setSubtasks(() => {
+            return subtasks.map(item => {
+                return {
+                    id: item.id,
+                    value: item.title,
+                    valid: true,
+                    shouldValidate: false,
+                }
+            })
+        })
+    }
+
+    const initColumns = useCallback(() => {
+        setColumns(statusList)
+    }, [statusList])
+
+    const initEditTaskForm = useCallback((taskData: Task) => {
+        initTaskTitle(taskData.title)
+        initDescription(taskData.description)
+        initSubTasks(taskData.subtasks)
+        setStatusId(taskData.statusId)
+        initColumns()
+    }, [initColumns])
+
     return {
         taskTitle, setTaskTitle,
         description, setDescription,
         subtasks, setSubtasks,
         columns, setColumns,
-        statusId, setStatusId, 
+        statusId, setStatusId,
+        initEditTaskForm,
         updateTaskTitle,
         notifyTaskTitle,
         updateDescription,
