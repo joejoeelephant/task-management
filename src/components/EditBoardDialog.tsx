@@ -5,7 +5,6 @@ import SecondaryButton from './SecondaryButton'
 import PrimaryButton from './PrimaryButton'
 import InputTextItem from './InputTextItem'
 import { validateRequired } from '@/utils/FormValidate.utils'
-import { v4 as uuidv4 } from 'uuid';
 import { useEditBoardForm } from '@/hooks/useEditBoardForm'
 import { updateBoard } from '@/localAPI/BoardApi'
 import { useAppDispatch, useAppSelector } from '@/hooks/storeHooks'

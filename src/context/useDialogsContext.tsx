@@ -1,11 +1,7 @@
-import React, { createContext, useContext, useEffect, useReducer, useState } from 'react';
-import AddBoardDialog from '@/components/AddBoardDialog';
-import EditBoardDialog from '@/components/EditBoardDialog';
-import DeleteBoardDialog from '@/components/DeleteBoardDialog';
-import AddTaskDialog from '@/components/AddTaskDialog';
-import CheckTaskDialog from '@/components/CheckTaskDialog';
-import EditTaskDialog from '@/components/EditTaskDialog';
-import DeleteTaskDialog from '@/components/DeleteTaskDialog';
+import React, { createContext, useContext, useReducer } from 'react';
+import LoadingDialog from '@/components/LoadingDialog';
+import dynamic from 'next/dynamic';
+
 type Action = 
     | {type: 'OPEN_ADD_BOARD_DIALOG';}
     | {type: 'CLOSE_ADD_BOARD_DIALOG';}
@@ -22,19 +18,49 @@ type Action =
     | {type: 'OPEN_DELETE_TASK_DIALOG'; payload: {id: string}}
     | {type: 'CLOSE_DELETE_TASK_DIALOG';}
 
-type DialogProps = {
+type CommonDialogProps = {
     isVisible: boolean;
+    closeDialog: () => void;
+}
+
+type TaskDialogProps = CommonDialogProps & {
+    id: string
+}
+
+type CommonStateItemProps = {
+    isVisible: boolean
+}
+
+type TaskStateItemProps = CommonStateItemProps & {
+    id: string
 }
 
 type StateProps = {
-    addBoardDialog: DialogProps;
-    editBoardDialog: DialogProps;
-    deleteBoardDialog: DialogProps;
-    addTaskDialog: DialogProps;
-    checkTaskDialog: {id: string, isVisible: boolean};
-    deleteTaskDialog: {id: string, isVisible: boolean};
-    editTaskDialog: {id: string, isVisible: boolean};
+    addBoardDialog: CommonStateItemProps;
+    editBoardDialog: CommonStateItemProps;
+    deleteBoardDialog: CommonStateItemProps;
+    addTaskDialog: CommonStateItemProps;
+    checkTaskDialog: TaskStateItemProps;
+    deleteTaskDialog: TaskStateItemProps;
+    editTaskDialog: TaskStateItemProps;
 }
+
+const loadDynamicDialog = <T extends {}>(fileName: string): React.ComponentType<T> => {
+    return dynamic<T>(() => import(`@/components/${fileName}`), {
+        loading: () => (<LoadingDialog/>),
+        ssr: false
+    });
+}
+
+const AddBoardDialog = loadDynamicDialog<CommonDialogProps>('AddBoardDialog')
+const EditBoardDialog = loadDynamicDialog<CommonDialogProps>('EditBoardDialog')
+const DeleteBoardDialog = loadDynamicDialog<CommonDialogProps>('DeleteBoardDialog')
+const AddTaskDialog = loadDynamicDialog<CommonDialogProps>('AddTaskDialog')
+const CheckTaskDialog = loadDynamicDialog<TaskDialogProps>('CheckTaskDialog')
+const EditTaskDialog = loadDynamicDialog<TaskDialogProps>('EditTaskDialog')
+const DeleteTaskDialog = loadDynamicDialog<TaskDialogProps>('DeleteTaskDialog')
+
+
 
 // Reducer
 const dialogReducer = (state: StateProps, action: Action): StateProps => {
@@ -94,15 +120,36 @@ export const DialogsProvider: React.FC<{children: React.ReactNode }> = ({childre
     const [state, dispatch] = useReducer(dialogReducer, initState);
 
     return (
-        <DialogsContext.Provider value={{ state, dispatch}}>
+        <DialogsContext.Provider value={{ state, dispatch}}> 
             {children}
-            <AddBoardDialog isVisible={state.addBoardDialog.isVisible} closeDialog={() => {dispatch({type: "CLOSE_ADD_BOARD_DIALOG"})}}/>
-            <DeleteBoardDialog isVisible={state.deleteBoardDialog.isVisible} closeDialog={() => {dispatch({type: "CLOSE_DELETE_BOARD_DIALOG"})}}/>
-            <EditBoardDialog isVisible={state.editBoardDialog.isVisible} closeDialog={() => {dispatch({type: "CLOSE_EDIT_BOARD_DIALOG"})}}/>
-            <AddTaskDialog isVisible={state.addTaskDialog.isVisible} closeDialog={() => {dispatch({type: "CLOSE_ADD_TASK_DIALOG"})}}/>
-            <CheckTaskDialog id={state.checkTaskDialog.id} isVisible={state.checkTaskDialog.isVisible} closeDialog={() => {dispatch({type: "CLOSE_CHECK_TASK_DIALOG"})}}/>
-            <EditTaskDialog id={state.editTaskDialog.id} isVisible={state.editTaskDialog.isVisible} closeDialog={() => {dispatch({type: "CLOSE_EDIT_TASK_DIALOG"})}}/>
-            <DeleteTaskDialog id={state.deleteTaskDialog.id} isVisible={state.deleteTaskDialog.isVisible} closeDialog={() => {dispatch({type: "CLOSE_DELETE_TASK_DIALOG"})}}/>
+            {
+                state.addBoardDialog.isVisible && 
+                <AddBoardDialog isVisible={state.addBoardDialog.isVisible} closeDialog={() => {dispatch({type: "CLOSE_ADD_BOARD_DIALOG"})}}/>
+            }
+            {
+                state.deleteBoardDialog.isVisible && 
+                <DeleteBoardDialog isVisible={state.deleteBoardDialog.isVisible} closeDialog={() => {dispatch({type: "CLOSE_DELETE_BOARD_DIALOG"})}}/>
+            }
+            {
+                state.editBoardDialog.isVisible && 
+                <EditBoardDialog isVisible={state.editBoardDialog.isVisible} closeDialog={() => {dispatch({type: "CLOSE_EDIT_BOARD_DIALOG"})}}/>
+            }
+            {
+                state.addTaskDialog.isVisible && 
+                <AddTaskDialog isVisible={state.addTaskDialog.isVisible} closeDialog={() => {dispatch({type: "CLOSE_ADD_TASK_DIALOG"})}}/>
+            }
+            {
+                state.checkTaskDialog.isVisible && 
+                <CheckTaskDialog id={state.checkTaskDialog.id} isVisible={state.checkTaskDialog.isVisible} closeDialog={() => {dispatch({type: "CLOSE_CHECK_TASK_DIALOG"})}}/>
+            }
+            {
+                state.editTaskDialog.isVisible && 
+                <EditTaskDialog id={state.editTaskDialog.id} isVisible={state.editTaskDialog.isVisible} closeDialog={() => {dispatch({type: "CLOSE_EDIT_TASK_DIALOG"})}}/>
+            }
+            {
+                state.deleteTaskDialog.isVisible && 
+                <DeleteTaskDialog id={state.deleteTaskDialog.id} isVisible={state.deleteTaskDialog.isVisible} closeDialog={() => {dispatch({type: "CLOSE_DELETE_TASK_DIALOG"})}}/>
+            }
         </DialogsContext.Provider>
     );
 };
